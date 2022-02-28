@@ -108,4 +108,11 @@ public class HelloController implements Initializable {
         selectdatabtn.setDisable(true);
 
     }
+
+    public void delSelectRecord(ActionEvent actionEvent) {
+        logview.setText("Удалить выбранную запись из БД. Пока не реализовано");
+    }
 }
+
+//Добавить фильтрацию по дате выбираемых данных из базы, возможность удаления записей из базы
+//обрабатывать данные из запроса удобнее по полям
