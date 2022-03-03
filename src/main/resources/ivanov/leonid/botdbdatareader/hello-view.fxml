@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="518.0" prefWidth="660.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ivanov.leonid.botdbdatareader.HelloController">
+<VBox prefHeight="574.0" prefWidth="726.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ivanov.leonid.botdbdatareader.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -27,11 +27,31 @@
             <children>
                <ChoiceBox fx:id="choiseselect" prefHeight="25.0" prefWidth="251.0" />
                <Button fx:id="selectdatabtn" mnemonicParsing="false" onAction="#selectAllDataFromtable" text="Select data" />
-               <Button mnemonicParsing="false" onAction="#delSelectRecord" text="Del select record" textFill="#ee0707" />
             </children>
+            <padding>
+               <Insets bottom="5.0" />
+            </padding>
          </HBox>
          <ListView fx:id="resultview" prefHeight="259.0" prefWidth="620.0" />
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <Label id="logview" fx:id="logview" alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="411.0" text="LogView">
+                  <opaqueInsets>
+                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  </opaqueInsets>
+               </Label>
+               <Button mnemonicParsing="false" onAction="#delSelectRecord" text="Del select record" textFill="#ee0707" />
+            </children>
+            <padding>
+               <Insets bottom="10.0" left="3.0" top="10.0" />
+            </padding>
+         </HBox>
       </children>
    </VBox>
-   <Label id="logview" fx:id="logview" alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="631.0" text="LogView" />
+   <TableView fx:id="tableView" prefHeight="180.0" prefWidth="620.0">
+     <columns>
+       <TableColumn prefWidth="75.0" text="C1" />
+       <TableColumn prefWidth="75.0" text="C2" />
+     </columns>
+   </TableView>
 </VBox>

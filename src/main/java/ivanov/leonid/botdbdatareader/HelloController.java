@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -26,6 +23,9 @@ public class HelloController implements Initializable {
     private Label welcomeText, logview;
     @FXML
     Button dbconnect, selecttables, selectdatabtn;
+
+    @FXML
+    TableView tableView;
 
     @FXML
     ListView resultview;
@@ -77,7 +77,17 @@ public class HelloController implements Initializable {
     public void getAllTablesFromDB(ActionEvent actionEvent) throws SQLException {
         if(mydb != null){
             //System.out.println(mydb.doselect("SHOW TABLES;"));
-            choiseselect.setItems(FXCollections.observableArrayList(mydb.doselect("SHOW TABLES;")));
+            ArrayList<String> result = mydb.doselect("SHOW TABLES;");
+            String tmp = result.get(0);
+            System.out.println(tmp);
+            Integer columncount = Integer.valueOf(tmp); //Получаем количество столбцов в ответе
+            ArrayList<String> res = new ArrayList<>(); //массив для вывода в интерфейс
+            for(int i = 1+columncount; i< result.size(); ){
+                res.add(result.get(i));
+                i = i + columncount;
+            }
+
+            choiseselect.setItems(FXCollections.observableArrayList(res));
             choiseselect.setDisable(false);
             selectdatabtn.setDisable(false);
         }else{
@@ -89,6 +99,7 @@ public class HelloController implements Initializable {
 
     public void selectAllDataFromtable(ActionEvent actionEvent) throws SQLException {
         if(choiseselect.getValue()!=null) {
+            logview.setText("Представлены данные из таблицы: " + (String) choiseselect.getValue());
             List<String> res = new ArrayList<String>();
             res = mydb.doselect("SELECT * FROM " + (String) choiseselect.getValue() + ";");
             //System.out.println(res);

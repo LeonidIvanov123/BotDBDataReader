@@ -19,14 +19,16 @@ public class Dbconnector {
         stmt = dbCon.createStatement();
         ResultSet rs = stmt.executeQuery(sqlReq);
         ResultSetMetaData rsmd = rs.getMetaData();
-        int columncount = rsmd.getColumnCount();
+        //int columncount = rsmd.getColumnCount();
         ArrayList<String> rest = new ArrayList<>();
-        while(rs.next()) {
+     /*   while(rs.next()) {
             String element = "";
             for(int i = 1; i<=columncount; i++)
                 element = element + " " + rs.getString(i);
             rest.add(element);
         }
+*/
+        rest = handlingresult(rs,rsmd);
         return rest;
     }
 
@@ -46,6 +48,25 @@ public class Dbconnector {
     public void closeConnection() throws SQLException {
         if (dbCon!=null)
             dbCon.close();
+    }
+
+    public ArrayList<String> handlingresult(ResultSet rs, ResultSetMetaData rsmd) throws SQLException {
+        ArrayList<String> columnresult = new ArrayList<>();
+
+        int countcolumn = rsmd.getColumnCount();
+        columnresult.add(String.valueOf(countcolumn)); //Первый элемент в результате - количество столбцов в таблице
+        //название столбцов
+        for(int i = 1; i<=countcolumn; i++){
+            columnresult.add(rsmd.getColumnName(i));
+        }
+        while (rs.next()){
+            for(int i = 1; i<=countcolumn; i++) {
+                columnresult.add(rs.getString(i));
+            }
+        }
+        //System.out.println(columnresult);
+
+        return columnresult;
     }
 
 }
