@@ -21,7 +21,7 @@
          <Button fx:id="selecttables" mnemonicParsing="false" onAction="#getAllTablesFromDB" text="Select all tables" />
       </children>
    </HBox>
-   <VBox prefHeight="286.0" prefWidth="620.0">
+   <VBox prefHeight="374.0" prefWidth="686.0">
       <children>
          <HBox prefHeight="39.0" prefWidth="620.0">
             <children>
@@ -48,10 +48,4 @@
          </HBox>
       </children>
    </VBox>
-   <TableView fx:id="tableView" prefHeight="180.0" prefWidth="620.0">
-     <columns>
-       <TableColumn prefWidth="75.0" text="C1" />
-       <TableColumn prefWidth="75.0" text="C2" />
-     </columns>
-   </TableView>
 </VBox>

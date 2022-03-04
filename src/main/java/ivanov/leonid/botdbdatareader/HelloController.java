@@ -25,14 +25,12 @@ public class HelloController implements Initializable {
     Button dbconnect, selecttables, selectdatabtn;
 
     @FXML
-    TableView tableView;
-
-    @FXML
     ListView resultview;
 
     @FXML
     ChoiceBox dbselector, choiseselect;
 
+    List<String> querryresult = new ArrayList<String>();
 
     @FXML
     protected void onHelloButtonClick() throws SQLException {
@@ -77,13 +75,12 @@ public class HelloController implements Initializable {
     public void getAllTablesFromDB(ActionEvent actionEvent) throws SQLException {
         if(mydb != null){
             //System.out.println(mydb.doselect("SHOW TABLES;"));
-            ArrayList<String> result = mydb.doselect("SHOW TABLES;");
-            String tmp = result.get(0);
-            System.out.println(tmp);
-            Integer columncount = Integer.valueOf(tmp); //Получаем количество столбцов в ответе
+            //ArrayList<String> result = mydb.doselect("SHOW TABLES;");
+            querryresult = mydb.doselect("SHOW TABLES;");
+            Integer columncount = Integer.valueOf(querryresult.get(0)); //Получаем количество столбцов в ответе
             ArrayList<String> res = new ArrayList<>(); //массив для вывода в интерфейс
-            for(int i = 1+columncount; i< result.size(); ){
-                res.add(result.get(i));
+            for(int i = 1+columncount; i< querryresult.size(); ){
+                res.add(querryresult.get(i));
                 i = i + columncount;
             }
 
@@ -100,17 +97,71 @@ public class HelloController implements Initializable {
     public void selectAllDataFromtable(ActionEvent actionEvent) throws SQLException {
         if(choiseselect.getValue()!=null) {
             logview.setText("Представлены данные из таблицы: " + (String) choiseselect.getValue());
-            List<String> res = new ArrayList<String>();
-            res = mydb.doselect("SELECT * FROM " + (String) choiseselect.getValue() + ";");
-            //System.out.println(res);
-            ObservableList<String> obslist = FXCollections.observableArrayList(res);
+            querryresult = mydb.doselect("SELECT * FROM " + (String) choiseselect.getValue() + ";");
+            Integer columncount = Integer.valueOf(querryresult.get(0)); //Получаем количество столбцов в ответе
+            ArrayList<String> dataforlistview = new ArrayList<>(); //массив для вывода в интерфейс
+            for(int i = 1+columncount; i< querryresult.size(); ){
+                String temp = "";
+                for(int j = i; j < (i+ columncount); j++) {
+                    temp = temp + " " + querryresult.get(j);
+                }
+                System.out.println(temp);
+                i = i + columncount;
+                dataforlistview.add(temp);
+            }
+            //querryresult.add(firststr);
+
+            ObservableList<String> obslist = FXCollections.observableArrayList(dataforlistview);
             resultview.setItems(obslist);
+            //tableView.setItems(obslist);
+
+            //refreshTableView(res);
+
         }else{
             logview.setText("Выберите таблицу из БД");
         }
     }
+/*
+    public void refreshTableView(List<String> data){
+        Integer columncount = Integer.valueOf(data.get(0));
+        System.out.println(tableView.getColumns());
+        tableView.getColumns().clear();
+        System.out.println(tableView.getColumns());
+        //заполняем название столбцов
+        for(int i = 1; i<=columncount; i++){
+            TableColumn<String, String> tableColumn = new TableColumn<>(data.get(i));
+            tableView.getColumns().add(tableColumn);
+        }
+       // ArrayList<String> l = new ArrayList<String>();
+        //List<l> = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<String>();
+        //заполняем данные в таблицу
+        //ObservableList<List<String>> observableList = FXCollections.observableList(list);// = FXCollections.observableList(l);
 
+        for(int i = 1+columncount; i < data.size();) {
+            for (int t = i; t < (i + columncount); t++) {
+                list.add(data.get(t));
 
+            }
+            //System.out.println(list);
+            //tableView.setItems(FXCollections.observableArrayList(list));
+            tableView.getItems().containsAll(list);
+
+            //resultview.setItems(FXCollections.observableList(list));
+            list.clear();
+            i = i + columncount;
+
+        }
+        tableView.getItems().add(list);
+        tableView.refresh();
+        //System.out.println(list);
+
+        //    i= i+columncount;
+        //}
+
+        //tableView.setItems(observableList);
+    }
+*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbselector.setItems(FXCollections.observableArrayList("localhost:3306", "127.0.0.1:3306", "127.0.0.1:50770"));
@@ -120,8 +171,20 @@ public class HelloController implements Initializable {
 
     }
 
-    public void delSelectRecord(ActionEvent actionEvent) {
+    public void delSelectRecord(ActionEvent actionEvent) throws SQLException {
         logview.setText("Удалить выбранную запись из БД. Пока не реализовано");
+        int numofstring = resultview.getSelectionModel().getSelectedIndex();
+        String sqlrequest = "";
+        if(numofstring != -1) {
+            int colcount = Integer.parseInt(querryresult.get(0));
+            sqlrequest = "DELETE FROM " + (String) choiseselect.getValue() + " WHERE '"
+                    + querryresult.get(1) + "' = " + querryresult.get(1+ colcount + numofstring* colcount) + ";";
+                    //Если удалять только по первому столбцу
+            System.out.println("sql = " + sqlrequest);
+            System.out.println(mydb.doselect(sqlrequest)); //создать другой метод для удаления в mydb
+
+            //System.out.println(numofstring);
+        }
     }
 }
 
