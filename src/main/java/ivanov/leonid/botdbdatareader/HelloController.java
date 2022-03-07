@@ -18,6 +18,7 @@ public class HelloController implements Initializable {
     private Dbconnector mydb;
     boolean stateConnection = false;
     String currentDB;
+    String curTable; //в переменную надо бы писать текущую выведенную на экран таблицу
 
     @FXML
     private Label welcomeText, logview;
@@ -36,7 +37,7 @@ public class HelloController implements Initializable {
     protected void onHelloButtonClick() throws SQLException {
         String dbaddress = (String) dbselector.getValue();
         if(!stateConnection) {
-            welcomeText.setText("Устанавливаем соединение с БД!");
+            //welcomeText.setText("Устанавливаем соединение с БД!");
             if (dbselector.getValue() == null) {
                 dbaddress = "127.0.0.1:3306";
             } else {
@@ -94,7 +95,7 @@ public class HelloController implements Initializable {
         }
     }
 
-    public void selectAllDataFromtable(ActionEvent actionEvent) throws SQLException {
+    public void selectAllDataFromtable() throws SQLException {
         if(choiseselect.getValue()!=null) {
             logview.setText("Представлены данные из таблицы: " + (String) choiseselect.getValue());
             querryresult = mydb.doselect("SELECT * FROM " + (String) choiseselect.getValue() + ";");
@@ -109,81 +110,37 @@ public class HelloController implements Initializable {
                 i = i + columncount;
                 dataforlistview.add(temp);
             }
-            //querryresult.add(firststr);
 
             ObservableList<String> obslist = FXCollections.observableArrayList(dataforlistview);
             resultview.setItems(obslist);
-            //tableView.setItems(obslist);
-
-            //refreshTableView(res);
-
         }else{
             logview.setText("Выберите таблицу из БД");
         }
     }
-/*
-    public void refreshTableView(List<String> data){
-        Integer columncount = Integer.valueOf(data.get(0));
-        System.out.println(tableView.getColumns());
-        tableView.getColumns().clear();
-        System.out.println(tableView.getColumns());
-        //заполняем название столбцов
-        for(int i = 1; i<=columncount; i++){
-            TableColumn<String, String> tableColumn = new TableColumn<>(data.get(i));
-            tableView.getColumns().add(tableColumn);
-        }
-       // ArrayList<String> l = new ArrayList<String>();
-        //List<l> = new ArrayList<>();
-        ArrayList<String> list = new ArrayList<String>();
-        //заполняем данные в таблицу
-        //ObservableList<List<String>> observableList = FXCollections.observableList(list);// = FXCollections.observableList(l);
 
-        for(int i = 1+columncount; i < data.size();) {
-            for (int t = i; t < (i + columncount); t++) {
-                list.add(data.get(t));
-
-            }
-            //System.out.println(list);
-            //tableView.setItems(FXCollections.observableArrayList(list));
-            tableView.getItems().containsAll(list);
-
-            //resultview.setItems(FXCollections.observableList(list));
-            list.clear();
-            i = i + columncount;
-
-        }
-        tableView.getItems().add(list);
-        tableView.refresh();
-        //System.out.println(list);
-
-        //    i= i+columncount;
-        //}
-
-        //tableView.setItems(observableList);
-    }
-*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbselector.setItems(FXCollections.observableArrayList("localhost:3306", "127.0.0.1:3306", "127.0.0.1:50770"));
         choiseselect.setDisable(true);
         selecttables.setDisable(true);
         selectdatabtn.setDisable(true);
-
     }
 
     public void delSelectRecord(ActionEvent actionEvent) throws SQLException {
-        logview.setText("Удалить выбранную запись из БД. Пока не реализовано");
         int numofstring = resultview.getSelectionModel().getSelectedIndex();
         String sqlrequest = "";
         if(numofstring != -1) {
             int colcount = Integer.parseInt(querryresult.get(0));
-            sqlrequest = "DELETE FROM " + (String) choiseselect.getValue() + " WHERE '"
-                    + querryresult.get(1) + "' = " + querryresult.get(1+ colcount + numofstring* colcount) + ";";
+            sqlrequest = "DELETE FROM " + (String) choiseselect.getValue() + " WHERE "
+                    + querryresult.get(1) + "=?;";
                     //Если удалять только по первому столбцу
-            System.out.println("sql = " + sqlrequest);
-            System.out.println(mydb.doselect(sqlrequest)); //создать другой метод для удаления в mydb
 
-            //System.out.println(numofstring);
+            if(mydb.dodelite(sqlrequest, Integer.valueOf(querryresult.get(1+ colcount + numofstring* colcount)))){
+                logview.setText("Запрос на удаление выполнен.");
+                selectAllDataFromtable();//рефреш окна с записями
+            }else {
+                logview.setText("Возникла ошибка. Удалить запись не удалось.");
+            }
         }
     }
 }

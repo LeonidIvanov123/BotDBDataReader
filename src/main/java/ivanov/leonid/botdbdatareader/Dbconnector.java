@@ -21,15 +21,21 @@ public class Dbconnector {
         ResultSetMetaData rsmd = rs.getMetaData();
         //int columncount = rsmd.getColumnCount();
         ArrayList<String> rest = new ArrayList<>();
-     /*   while(rs.next()) {
-            String element = "";
-            for(int i = 1; i<=columncount; i++)
-                element = element + " " + rs.getString(i);
-            rest.add(element);
-        }
-*/
         rest = handlingresult(rs,rsmd);
         return rest;
+    }
+
+    public boolean dodelite(String sqlReq, int id){
+        try {
+            PreparedStatement pstmt = dbCon.prepareStatement(sqlReq);
+            pstmt.setInt(1, id);
+            //System.out.println(pstmt.toString());
+            pstmt.execute();
+        }catch (SQLException e){
+            System.out.println("Error Dbconnector " +e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     public boolean initConnection() {

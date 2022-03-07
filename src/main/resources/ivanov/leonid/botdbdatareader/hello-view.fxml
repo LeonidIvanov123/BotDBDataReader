@@ -3,13 +3,14 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <VBox prefHeight="574.0" prefWidth="726.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ivanov.leonid.botdbdatareader.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <Label fx:id="welcomeText" prefHeight="17.0" prefWidth="612.0" text="BotDatareader:1.0" />
+    <Label fx:id="welcomeText" prefHeight="17.0" prefWidth="612.0" text="BotDatareader:1.1" />
    <HBox prefHeight="38.0" prefWidth="620.0">
       <children>
          <ChoiceBox fx:id="dbselector" prefWidth="150.0" value="127.0.0.1:3306">
@@ -27,6 +28,23 @@
             <children>
                <ChoiceBox fx:id="choiseselect" prefHeight="25.0" prefWidth="251.0" />
                <Button fx:id="selectdatabtn" mnemonicParsing="false" onAction="#selectAllDataFromtable" text="Select data" />
+               <CheckBox mnemonicParsing="false" text="Date: ">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+                  <opaqueInsets>
+                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  </opaqueInsets>
+                  <HBox.margin>
+                     <Insets left="3.0" right="3.0" top="4.0" />
+                  </HBox.margin>
+               </CheckBox>
+               <DatePicker prefHeight="26.0" prefWidth="135.0">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets></DatePicker>
+               <Label text=" - " />
+               <DatePicker prefHeight="26.0" prefWidth="135.0" />
             </children>
             <padding>
                <Insets bottom="5.0" />
