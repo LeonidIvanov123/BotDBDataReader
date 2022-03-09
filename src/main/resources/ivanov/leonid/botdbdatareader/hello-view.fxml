@@ -28,7 +28,7 @@
             <children>
                <ChoiceBox fx:id="choiseselect" prefHeight="25.0" prefWidth="251.0" />
                <Button fx:id="selectdatabtn" mnemonicParsing="false" onAction="#selectAllDataFromtable" text="Select data" />
-               <CheckBox mnemonicParsing="false" text="Date: ">
+               <CheckBox fx:id="checkDateForSelect" mnemonicParsing="false" text="Date: ">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -39,12 +39,12 @@
                      <Insets left="3.0" right="3.0" top="4.0" />
                   </HBox.margin>
                </CheckBox>
-               <DatePicker prefHeight="26.0" prefWidth="135.0">
+               <DatePicker fx:id="dateStartSelect" prefHeight="26.0" prefWidth="135.0">
                   <opaqueInsets>
                      <Insets />
                   </opaqueInsets></DatePicker>
                <Label text=" - " />
-               <DatePicker prefHeight="26.0" prefWidth="135.0" />
+               <DatePicker fx:id="dateStopSelect" prefHeight="26.0" prefWidth="135.0" />
             </children>
             <padding>
                <Insets bottom="5.0" />

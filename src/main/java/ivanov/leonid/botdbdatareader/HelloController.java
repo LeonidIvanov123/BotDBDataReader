@@ -24,10 +24,12 @@ public class HelloController implements Initializable {
     private Label welcomeText, logview;
     @FXML
     Button dbconnect, selecttables, selectdatabtn;
-
+    @FXML
+    CheckBox checkDateForSelect;
     @FXML
     ListView resultview;
-
+    @FXML
+    DatePicker dateStartSelect, dateStopSelect;
     @FXML
     ChoiceBox dbselector, choiseselect;
 
@@ -65,6 +67,10 @@ public class HelloController implements Initializable {
             selecttables.setDisable(true);
             choiseselect.setDisable(true);
             selectdatabtn.setDisable(true);
+            checkDateForSelect.setSelected(false);
+            checkDateForSelect.setDisable(true);
+            dateStartSelect.setDisable(true);
+            dateStopSelect.setDisable(true);
             resultview.getItems().clear();
             }
         }
@@ -88,17 +94,30 @@ public class HelloController implements Initializable {
             choiseselect.setItems(FXCollections.observableArrayList(res));
             choiseselect.setDisable(false);
             selectdatabtn.setDisable(false);
+            checkDateForSelect.setDisable(false);
+            dateStartSelect.setDisable(false);
+            dateStopSelect.setDisable(false);
         }else{
             logview.setText("Нет подключения к базе данных!");
             choiseselect.setDisable(true);
             selectdatabtn.setDisable(true);
+            checkDateForSelect.setSelected(false);
+            checkDateForSelect.setDisable(true);
+            dateStartSelect.setDisable(true);
+            dateStopSelect.setDisable(true);
         }
     }
 
     public void selectAllDataFromtable() throws SQLException {
+        String dateStart, dateEnd;
         if(choiseselect.getValue()!=null) {
             logview.setText("Представлены данные из таблицы: " + (String) choiseselect.getValue());
-            querryresult = mydb.doselect("SELECT * FROM " + (String) choiseselect.getValue() + ";");
+            if(!checkDateForSelect.isSelected()) {
+                querryresult = mydb.doselectNew("SELECT * FROM " + (String) choiseselect.getValue() + ";");
+                System.out.println(dateStartSelect.getValue());
+            }else {
+                querryresult = mydb.doselectNew("SELECT * FROM " + (String) choiseselect.getValue() + "WHERE (dateMsg > ?);", dateStartSelect.getValue().toString());
+            }
             Integer columncount = Integer.valueOf(querryresult.get(0)); //Получаем количество столбцов в ответе
             ArrayList<String> dataforlistview = new ArrayList<>(); //массив для вывода в интерфейс
             for(int i = 1+columncount; i< querryresult.size(); ){
@@ -106,7 +125,7 @@ public class HelloController implements Initializable {
                 for(int j = i; j < (i+ columncount); j++) {
                     temp = temp + " " + querryresult.get(j);
                 }
-                System.out.println(temp);
+                //System.out.println(temp); //все данные из запроса
                 i = i + columncount;
                 dataforlistview.add(temp);
             }
@@ -124,6 +143,9 @@ public class HelloController implements Initializable {
         choiseselect.setDisable(true);
         selecttables.setDisable(true);
         selectdatabtn.setDisable(true);
+        checkDateForSelect.setDisable(true);
+        dateStartSelect.setDisable(true);
+        dateStopSelect.setDisable(true);
     }
 
     public void delSelectRecord(ActionEvent actionEvent) throws SQLException {
