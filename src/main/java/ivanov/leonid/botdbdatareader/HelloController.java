@@ -1,6 +1,7 @@
 package ivanov.leonid.botdbdatareader;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ public class HelloController implements Initializable {
     boolean stateConnection = false;
     String currentDB;
     String curTable; //в переменную надо бы писать текущую выведенную на экран таблицу
+    String version;
 
     @FXML
     private Label welcomeText, logview;
@@ -32,6 +34,8 @@ public class HelloController implements Initializable {
     DatePicker dateStartSelect, dateStopSelect;
     @FXML
     ChoiceBox dbselector, choiseselect;
+    @FXML
+    TextField fieldNewDB;
 
     List<String> querryresult = new ArrayList<String>();
 
@@ -53,6 +57,7 @@ public class HelloController implements Initializable {
                 dbconnect.setText("Disconnect");
                 stateConnection = true;
                 selecttables.setDisable(false);
+                welcomeText.setText(version + "             [Текущее поключение к БД: " + dbaddress + "]");
             } else {
                 logview.setText("Не удалось подключиться к БД");
                 mydb = null;
@@ -72,6 +77,7 @@ public class HelloController implements Initializable {
             dateStartSelect.setDisable(true);
             dateStopSelect.setDisable(true);
             resultview.getItems().clear();
+            welcomeText.setText(version);
             }
         }
         //String sq = mydb.doselect("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES;");
@@ -146,6 +152,7 @@ public class HelloController implements Initializable {
         checkDateForSelect.setDisable(true);
         dateStartSelect.setDisable(true);
         dateStopSelect.setDisable(true);
+        version = welcomeText.getText();
     }
 
     public void delSelectRecord(ActionEvent actionEvent) throws SQLException {
@@ -163,6 +170,18 @@ public class HelloController implements Initializable {
             }else {
                 logview.setText("Возникла ошибка. Удалить запись не удалось.");
             }
+        }
+    }
+
+    public void addNewDBinCBox(ActionEvent actionEvent) {
+        if(fieldNewDB.getText() != ""){
+            ObservableList olist = dbselector.getItems();
+            olist.add(fieldNewDB.getText());
+            dbselector.setItems(FXCollections.observableArrayList(olist));
+            logview.setText("В список добавлена база: " + fieldNewDB.getText());
+            fieldNewDB.clear();
+        }else {
+            logview.setText("Введите адрес вашей БД в формате 'ip:port'");
         }
     }
 }
