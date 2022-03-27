@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="574.0" prefWidth="726.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ivanov.leonid.botdbdatareader.HelloController">
+<VBox prefHeight="580.0" prefWidth="726.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ivanov.leonid.botdbdatareader.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
     <Label fx:id="welcomeText" prefHeight="17.0" prefWidth="612.0" text="BotDatareader:1.2" />
-   <HBox prefHeight="38.0" prefWidth="620.0">
+   <HBox prefHeight="25.0" prefWidth="620.0">
       <children>
          <ChoiceBox fx:id="dbselector" prefWidth="150.0" value="127.0.0.1:3306">
             <opaqueInsets>
@@ -39,9 +39,9 @@
             </HBox.margin></Button>
       </children>
    </HBox>
-   <VBox prefHeight="440.0" prefWidth="686.0">
+   <VBox prefHeight="450.0" prefWidth="686.0" VBox.vgrow="ALWAYS">
       <children>
-         <HBox prefHeight="39.0" prefWidth="620.0">
+         <HBox prefHeight="30.0" prefWidth="620.0">
             <children>
                <ChoiceBox fx:id="choiseselect" prefHeight="25.0" prefWidth="251.0" />
                <Button fx:id="selectdatabtn" mnemonicParsing="false" onAction="#selectAllDataFromtable" text="Select data" />
@@ -67,10 +67,13 @@
                <Insets bottom="5.0" />
             </padding>
          </HBox>
-         <ListView fx:id="resultview" prefHeight="360.0" prefWidth="620.0" />
+         <ListView fx:id="resultview" prefHeight="395.0" prefWidth="686.0" VBox.vgrow="ALWAYS">
+            <padding>
+               <Insets top="5.0" />
+            </padding></ListView>
          <HBox alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="686.0">
             <children>
-               <Label id="logview" fx:id="logview" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" prefHeight="17.0" prefWidth="411.0" text="LogView">
+               <Label id="logview" fx:id="logview" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" prefHeight="20.0" prefWidth="411.0" text="LogView">
                   <opaqueInsets>
                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </opaqueInsets>
@@ -85,5 +88,8 @@
             </effect>
          </HBox>
       </children>
+      <padding>
+         <Insets top="5.0" />
+      </padding>
    </VBox>
 </VBox>
