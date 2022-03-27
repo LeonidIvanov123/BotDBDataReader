@@ -5,9 +5,14 @@ import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +26,8 @@ public class HelloController implements Initializable {
     String currentDB;
     String curTable; //в переменную надо бы писать текущую выведенную на экран таблицу
     String version;
+    static SettingsConnection myConnection;
+   // private ModuleLayer.Controller children;
 
     @FXML
     private Label welcomeText, logview;
@@ -58,6 +65,7 @@ public class HelloController implements Initializable {
                 stateConnection = true;
                 selecttables.setDisable(false);
                 welcomeText.setText(version + "             [Текущее поключение к БД: " + dbaddress + "]");
+                myConnection.setDBAddress(dbaddress);
             } else {
                 logview.setText("Не удалось подключиться к БД");
                 mydb = null;
@@ -184,7 +192,23 @@ public class HelloController implements Initializable {
             logview.setText("Введите адрес вашей БД в формате 'ip:port'");
         }
     }
-}
 
-//Добавить фильтрацию по дате выбираемых данных из базы, возможность удаления записей из базы
-//обрабатывать данные из запроса удобнее по полям
+    public void openSettingWindow(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlSetting = new FXMLLoader(HelloApplication.class.getResource("setting-view.fxml"));
+        Scene scene = new Scene(fxmlSetting.load(), 350, 200);
+        Stage s = new Stage();
+        s.setTitle("Settings: BotDatareader:1.1");
+        s.setScene(scene);
+
+        //ModuleLayer.Controller controller = fxmlSetting.getController();
+        //controller.initData(myConnection);
+
+
+        s.show();
+        //Node n = fxmlSetting.getController();
+
+        //children = fxmlSetting.getController();
+
+
+    }
+}

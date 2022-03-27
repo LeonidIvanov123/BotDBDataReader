@@ -33,6 +33,10 @@
             <HBox.margin>
                <Insets left="5.0" />
             </HBox.margin></Button>
+         <Button mnemonicParsing="false" onAction="#openSettingWindow" text="Opn settings">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin></Button>
       </children>
    </HBox>
    <VBox prefHeight="440.0" prefWidth="686.0">

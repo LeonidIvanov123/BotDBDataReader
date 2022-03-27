@@ -22,7 +22,7 @@ public class HelloApplication extends Application {
         stage.setTitle("BotDatareader:1.0");
         stage.setScene(scene);
         stage.show();
-        initapp();
+        //initapp();
     }
 
     public static void main(String[] args) {
@@ -36,6 +36,6 @@ public class HelloApplication extends Application {
         dbselector.getItems().add("127.0.0.1:3306");
         dbselector.getItems().add("127.0.0.1:50770");
     */
-    }
 
+    }
 }
