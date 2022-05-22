@@ -2,11 +2,16 @@ package ivanov.leonid.botdbdatareader;
 
 /*Структура хранит данные о такущих подключениях*/
 public class SettingsConnection {
-    private String  botAddress; //not used
+    private String  botAddress;
     private String DBAddress;
-    private String DBPort;
     private String DBusername;
     private String DBPassword;
+
+    public SettingsConnection(String data) {
+        if(!data.equals("")){
+            setDBAddress(data.substring((data.lastIndexOf("DBAddress='") + 11), data.indexOf("', DBusername='")));
+        }
+    }
 
     public String getBotAddress() {
         return botAddress;
@@ -24,14 +29,6 @@ public class SettingsConnection {
         this.DBAddress = DBAddress;
     }
 
-    public String getDBPort() {
-        return DBPort;
-    }
-
-    public void setDBPort(String DBPort) {
-        this.DBPort = DBPort;
-    }
-
     public String getDBusername() {
         return DBusername;
     }
@@ -46,5 +43,15 @@ public class SettingsConnection {
 
     public void setDBPassword(String DBPassword) {
         this.DBPassword = DBPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "SettingsConnection{" +
+                "botAddress='" + botAddress + '\'' +
+                ", DBAddress='" + DBAddress + '\'' +
+                ", DBusername='" + DBusername + '\'' +
+                ", DBPassword='" + DBPassword + '\'' +
+                '}';
     }
 }

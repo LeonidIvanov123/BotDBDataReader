@@ -29,13 +29,4 @@ public class HelloApplication extends Application {
         launch();
     }
 
-    public void initapp(){
-        //welcomeText.setText("WORKED!!!");
-        //dbselector.setItems(FXCollections.observableArrayList("localhost:3306", "127.0.0.1:3306", "127.0.0.1:50770"));
-        /*dbselector.getItems().add("localhost:3306");
-        dbselector.getItems().add("127.0.0.1:3306");
-        dbselector.getItems().add("127.0.0.1:50770");
-    */
-
-    }
 }

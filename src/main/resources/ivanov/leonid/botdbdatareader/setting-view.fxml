@@ -17,7 +17,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
-            <TextField fx:id="addrportSettings" alignment="CENTER_RIGHT" maxWidth="-Infinity" prefHeight="27.0" prefWidth="175.0">
+            <TextField fx:id="addrportSettings" maxWidth="-Infinity" prefHeight="27.0" prefWidth="175.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></TextField>
@@ -39,7 +39,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
-            <TextField fx:id="usernameSettings" alignment="CENTER_RIGHT" maxWidth="-Infinity" prefHeight="27.0" prefWidth="191.0">
+            <TextField fx:id="usernameSettings" maxWidth="-Infinity" prefHeight="27.0" prefWidth="191.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
@@ -55,7 +55,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
-            <TextField fx:id="passwordSettings" alignment="CENTER_RIGHT" maxWidth="-Infinity" prefHeight="27.0" prefWidth="196.0">
+            <TextField fx:id="passwordSettings" maxWidth="-Infinity" prefHeight="27.0" prefWidth="196.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>

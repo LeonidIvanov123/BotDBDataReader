@@ -10,12 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -65,7 +67,7 @@ public class HelloController implements Initializable {
                 stateConnection = true;
                 selecttables.setDisable(false);
                 welcomeText.setText(version + "             [Текущее поключение к БД: " + dbaddress + "]");
-                myConnection.setDBAddress(dbaddress);
+               // myConnection.setDBAddress(dbaddress);
             } else {
                 logview.setText("Не удалось подключиться к БД");
                 mydb = null;
@@ -182,6 +184,8 @@ public class HelloController implements Initializable {
     }
 
     public void addNewDBinCBox(ActionEvent actionEvent) {
+        logview.setText("Добавить БД можно через интерфейс 'Opn setting'");
+        /*
         if(fieldNewDB.getText() != ""){
             ObservableList olist = dbselector.getItems();
             olist.add(fieldNewDB.getText());
@@ -191,6 +195,7 @@ public class HelloController implements Initializable {
         }else {
             logview.setText("Введите адрес вашей БД в формате 'ip:port'");
         }
+         */
     }
 
     public void openSettingWindow(ActionEvent actionEvent) throws IOException {
@@ -205,10 +210,34 @@ public class HelloController implements Initializable {
 
 
         s.show();
+        //обновлять список когда s закроется
         //Node n = fxmlSetting.getController();
-
         //children = fxmlSetting.getController();
 
 
+    }
+
+    public void updateChoiceBDBox() throws IOException {
+        List<SettingsConnection> connectionList = new ArrayList<>();
+        File f = new File("./filesetting");
+        if(f.exists()) {
+            BufferedReader br = new BufferedReader(new FileReader(f));
+
+            String tmp = "";
+            while ((tmp = br.readLine()) != null){
+                SettingsConnection sc = new SettingsConnection(tmp);
+                connectionList.add(sc);
+            }
+
+            logview.setText("info about DB from file: " + f.getName());
+        }
+        dbselector.getItems().clear();
+        Iterator settinglistiterator = connectionList.iterator();
+        for(SettingsConnection sc : connectionList){
+            dbselector.getItems().add(sc.getDBAddress());
+        }
+
+        //dbselector.getItems().containsAll(connectionList);
+        //dbselector.setItems(FXCollections.observableArrayList("localhost6", "127.0.0.1:3306", "127.0.0.1:50770"));
     }
 }

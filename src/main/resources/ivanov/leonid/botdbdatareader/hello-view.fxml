@@ -14,7 +14,7 @@
     <Label fx:id="welcomeText" prefHeight="17.0" prefWidth="612.0" text="BotDatareader:1.2" />
    <HBox prefHeight="25.0" prefWidth="620.0">
       <children>
-         <ChoiceBox fx:id="dbselector" prefWidth="150.0" value="127.0.0.1:3306">
+         <ChoiceBox id="choiceDBBox" fx:id="dbselector" onMousePressed="#updateChoiceBDBox" prefWidth="150.0" value="127.0.0.1:3306">
             <opaqueInsets>
                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </opaqueInsets>
@@ -67,7 +67,7 @@
                <Insets bottom="5.0" />
             </padding>
          </HBox>
-         <ListView fx:id="resultview" prefHeight="395.0" prefWidth="686.0" VBox.vgrow="ALWAYS">
+         <ListView fx:id="resultview" onMousePressed="#updateChoiceBDBox" prefHeight="395.0" prefWidth="686.0" VBox.vgrow="ALWAYS">
             <padding>
                <Insets top="5.0" />
             </padding></ListView>
