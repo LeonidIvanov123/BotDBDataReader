@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class HelloController implements Initializable {
 
@@ -232,10 +235,12 @@ public class HelloController implements Initializable {
             logview.setText("info about DB from file: " + f.getName());
         }
         dbselector.getItems().clear();
-        Iterator settinglistiterator = connectionList.iterator();
+      /*  Iterator settinglistiterator = connectionList.iterator();
         for(SettingsConnection sc : connectionList){
             dbselector.getItems().add(sc.getDBAddress());
         }
+        */
+        dbselector.setItems(FXCollections.observableArrayList(connectionList.stream().map(SettingsConnection::getDBAddress).collect(toList())));
 
         //dbselector.getItems().containsAll(connectionList);
         //dbselector.setItems(FXCollections.observableArrayList("localhost6", "127.0.0.1:3306", "127.0.0.1:50770"));
